@@ -64,6 +64,7 @@
          
         </ul>
         @if (auth()->check() && auth()->user()->is_admin == true)
+        <a href="{{route('payment.index')}}" target="_blank" class="btn btn-danger d-flex align-items-center column-gap-2">Купить подписку</a>
             <a href="{{route('addmovie')}}" type="button" class="btn btn-warning  me-2 d-flex align-items-center column-gap-2">
                 <span>Добавить фильм</span>
             </a>

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Application\PagesController;
 use App\Http\Controllers\Application\FormController;
+use App\Http\Controllers\PaymentController;
 
 
 Route::controller(PagesController::class)->group(function(){
@@ -32,18 +33,10 @@ Route::controller(FormController::class)->group(function(){
     Route::post('/rating','rating')->name('rating');
 });
 
-// Route::get('/movies/{movie}', function ($movie, Request $request) {
-//     $movies = [
-//         [
-//             'id'=>1,
-//             'name'=>'Матрица',
-//             'description'=>'Жизнь Томаса Андерсона разделена на две части:',
-//             'preview'=>'https://kinopoiskapiunofficial.tech/images/posters/kp/301.jpg',
-//             'rating'=>8.7
+Route::match(['GET','POST'],'payments/callback',[PaymentController::class,'callback'])->name('payment.callback');
+Route::post('payments/create',[PaymentController::class,'create'])->name('payments.create');
+Route::get('payments',[PaymentController::class,'index'])->name('payment.index');
 
-//         ]];
-//     return view('pages.movie',['movie'=>$movie]);
-// })->name('movie');
 
 
 
