@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use App\Models\Categorie;
+use App\Models\User;
 use App\Service\PaymentService;
 use Illuminate\Http\Request;
 use YooKassa\Model\Notification\NotificationEventType;
@@ -39,12 +40,14 @@ class PaymentController extends Controller
     public function callback(Request $request,PaymentService $service)
     {
         $source = file_get_contents('php://input');
+        dd($source);
         $requestBody = json_decode($source, true);
         $notification = ($requestBody['event'] === NotificationEventType::PAYMENT_SUCCEEDED) ? new NotificationSucceeded($requestBody): new NotificationWaitingForCapture($requestBody);
         $payment = $notification->getObject();
         if(isset($payment->status) && $payment->status === 'succeeded'){
             if($payment->paid === true){
                 $metadata=$payment->metadata;
+               
                 if($metadata->transaction_id){
                     $transaction_id=$metadata->transaction_id;
                     $transaction=Transaction::find($transaction_id);
@@ -52,6 +55,7 @@ class PaymentController extends Controller
                     $transaction->save();
 
                     $balans=$payment->amount->value;
+                    dd($balans);
                 }
             }
         }

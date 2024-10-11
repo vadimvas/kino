@@ -37,7 +37,7 @@
                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Выберите жанр </a>
                     <ul class="dropdown-menu">
                     @foreach ($categories as $categorie)
-                        <li><a href="{{$categorie->alias}}">{{$categorie->name}}</a></li>
+                        <li><a href="{{route($categorie->alias)}}">{{$categorie->name}}</a></li>  
                     @endforeach
                     </ul>
                 </div>
